@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Welcome">
+        <menu>
+            <item android:title="User"
+                android:icon="@drawable/user"
+                android:id="@+id/User"
+                />
+            <item android:id="@+id/home"
+                android:icon="@drawable/ic_baseline_home_24"
+                android:title="Home"
+                />
+            <item android:title="History"
+                android:id="@+id/history"
+                android:icon="@drawable/history"
+                />
+        </menu>
+    </item>
+    <item android:title="App Information">
+        <menu>
+            <item android:title="Term and Comdition"
+                android:icon="@drawable/term"
+                android:id="@+id/TermAndCondition"
+                />
+            <item android:title="Privicy and Pollacy"
+                android:icon="@drawable/privecy"
+                android:id="@+id/PrivacyPoalcy"
+                />
+            <item android:title="Contact Us"
+                android:icon="@drawable/phone"
+                android:id="@+id/ContectUs"
+                />
+            <item android:title="About Us"
+                android:icon="@drawable/logoeagle"
+                android:id="@+id/AboutUs"
+                />
+        </menu>
+    </item>
+    <item android:title="Logout"
+        android:icon="@drawable/logout"
+        android:id="@+id/Logout"
+        />
+</menu>
