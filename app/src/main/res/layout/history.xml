@@ -1,14 +1,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:clickable="true"
         card_view:cardCornerRadius="12dp"
-       card_view:cardElevation="10dp"
+        card_view:cardElevation="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
@@ -21,14 +21,35 @@
             android:layout_marginBottom="5dp"
             android:elevation="10dp"
             android:padding="5dp">
-
-
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="30dp"
+                android:layout_alignParentEnd="true"
+                >
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/kis"
+                android:id="@+id/kis"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal"/>
+            <TextView
+                android:id="@+id/tvDate"
+                style="@style/comfirm_load_textView"
+                android:layout_width="wrap_content"
+                android:text="3/12/2020"
+                android:layout_below="@id/kis"
+                android:layout_marginTop="5dp"
+                android:layout_alignParentEnd="true" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/llLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -39,14 +60,15 @@
                     android:layout_marginBottom="-3dp"/>
 
                 <TextView
+                    android:singleLine="true"
                     android:id="@+id/tvAddress"
                     style="@style/comfirm_load_textView"
                     android:layout_width="wrap_content"
                     android:layout_gravity="center"
-                    android:singleLine="true"
-                    android:layout_marginLeft="3dp"
+                    android:layout_marginLeft="-3dp"
                     android:textStyle="bold"
                     android:text="Source to Destination Add : "
+
                     android:layout_marginBottom="-3dp"/>
 
             </LinearLayout>
@@ -57,14 +79,14 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/llLocation"
                 android:orientation="vertical"
-                android:layout_marginLeft="30dp">
+                android:layout_marginLeft="22dp">
 
                 <LinearLayout
                     android:id="@+id/llMaterialType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/llLocation"
-                   >
+                    >
 
                     <TextView
                         style="@style/comfirm_load_textView"
@@ -73,17 +95,19 @@
                         android:text="Material : " />
 
                     <TextView
-                        android:id="@+id/tvTypeOfaterial"
+                        android:id="@+id/tvTypeOfmaterial"
                         style="@style/comfirm_load_textView"
                         android:layout_width="wrap_content"
-                        android:text="Steel" />
+                        android:text="Steel"
+                        />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/llName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/llMaterialType">
+                    android:layout_below="@id/llMaterialType"
+                   >
 
                     <TextView
                         style="@style/comfirm_load_textView"
@@ -104,40 +128,28 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/llName">
+                    android:layout_below="@id/llName"
+                    >
 
                     <TextView
                         style="@style/comfirm_load_textView"
                         android:layout_width="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="Last date : "
+                        android:text="Rate : "
 
                         />
 
                     <TextView
-                        android:id="@+id/tvLastDate"
+                        android:id="@+id/tvrate"
                         style="@style/comfirm_load_textView"
                         android:layout_width="wrap_content"
-                        android:text="3/12/2020" />
+                        android:text="12000" />
 
                 </LinearLayout>
+
+
             </LinearLayout>
-'
-
-            <ImageView
-                android:id="@+id/ivMoreVert"
-                android:layout_width="30dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="25dp"
-                android:src="@drawable/more_vert"
-                android:layout_alignParentEnd="true"/>
-
-                <ImageView
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/ivMoreVert"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/check_circle" />
+            '
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>

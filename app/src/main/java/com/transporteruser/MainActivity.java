@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.history:
                         fragment = new HistoryFragement();
+                        binding.floting.setVisibility(View.GONE);
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame,fragment).commit();
                 return true;
@@ -120,13 +122,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if(currentUser==null){
-            sendUserToLoginActivity();
-        }
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        if(currentUser==null){
+//            sendUserToLoginActivity();
+//        }
+//    }
     private void sendUserToLoginActivity(){
         Intent intent = new Intent(MainActivity.this,LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
