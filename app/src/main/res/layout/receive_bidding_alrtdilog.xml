@@ -1,0 +1,188 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="380dp"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:layout_gravity="center">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="5dp"
+            android:elevation="10dp"
+            android:padding="5dp"
+            android:background="@drawable/boder_comfirm_load">
+
+            <LinearLayout
+                android:id="@+id/llLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/location"
+                    android:layout_marginTop="25dp"
+                   />
+
+                <TextView
+                    android:id="@+id/tvAddress"
+                    style="@style/comfirm_load_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:textStyle="bold"
+                    android:text="Source to Destination Add : "
+                    android:textSize="20sp"
+                    android:padding="5dp"
+                    android:layout_marginTop="15dp"
+                    />
+
+            </LinearLayout>
+            <ImageView
+                android:id="@+id/ivCancel"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/cross"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="-9dp"
+                android:layout_marginRight="-5dp"/>
+
+
+
+            <LinearLayout
+                android:id="@+id/lll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/llLocation"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                >
+
+                <LinearLayout
+                    android:id="@+id/llName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/llMaterialType"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        style="@style/comfirm_load_textView"
+                        android:layout_width="wrap_content"
+                        android:text="Name : "
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/tvTransporterName"
+                        style="@style/comfirm_load_textView"
+                        android:layout_width="wrap_content"
+                        android:text="khan shab"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp">
+                <TextView
+                    style="@style/comfirm_load_textView"
+                    android:layout_width="wrap_content"
+                    android:text="Material : "
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tvMaterial"
+                    style="@style/comfirm_load_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="gold"
+                    android:textSize="16sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp">
+                    <TextView
+                        style="@style/comfirm_load_textView"
+                        android:layout_width="wrap_content"
+                        android:text="Date : "
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/tvdate"
+                        style="@style/comfirm_load_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:text="10/23/2020"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/llMaterialType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/llLocation"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        style="@style/comfirm_load_textView"
+                        android:layout_width="wrap_content"
+                        android:text="Rate : "
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/tvRate"
+                        style="@style/comfirm_load_textView"
+                        android:layout_width="wrap_content"
+                        android:text="10000"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="287dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/llName"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        style="@style/comfirm_load_textView"
+                        android:layout_width="wrap_content"
+                        android:text=" Remark"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvRemark"
+                        style="@style/comfirm_load_textView"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/boder_comfirm_load"
+                        android:elevation="5dp"
+                        android:hint="bahut badiya hai aapki "
+                        android:padding="8dp"
+                        android:textSize="16sp" />
+
+                    <Button
+                        android:layout_width="180dp"
+                        android:layout_height="40dp"
+                        android:id="@+id/btnAccept"
+                        android:layout_gravity="center"
+                        android:background="@drawable/button_blue"
+                        android:text="Accept"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginBottom="5dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+</LinearLayout>
