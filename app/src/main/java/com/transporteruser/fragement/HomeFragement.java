@@ -2,6 +2,7 @@ package com.transporteruser.fragement;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.transporteruser.BidActivity;
+import com.transporteruser.MainActivity;
 import com.transporteruser.adapter.ConfirmLoadAdapter;
 import com.transporteruser.adapter.CreatedLoadAdapter;
 import com.transporteruser.api.UserService;
@@ -39,6 +41,7 @@ public class HomeFragement extends Fragment {
     String currentUserId;
     String spin;
     ProgressDialog pd;
+    ArrayList<Lead> createLeadList;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,20 +62,26 @@ public class HomeFragement extends Fragment {
                 if(spin.equals("New Created Loads")){
                     pd = new ProgressDialog(getContext());
                     pd.setMessage("Please Wait......");
+                    //pd.setCancelable(false);
                     pd.show();
-                    Call<ArrayList<Lead>> call = userApi.getCreateLoadsByUserId("rmsFuRPqdwhkgXBZRe1wmyNTeEm1");
+
+                    Call<ArrayList<Lead>> call = userApi.getCreateLoadsByUserId(currentUserId);
                     call.enqueue(new Callback<ArrayList<Lead>>() {
                         @Override
                         public void onResponse(Call<ArrayList<Lead>> call, Response<ArrayList<Lead>> response) {
+                            Toast.makeText(getContext(), ""+response.code(), Toast.LENGTH_SHORT).show();
                             if(response.code()==200) {
-                                  createdLoadAdapter = new CreatedLoadAdapter(response.body(),getContext());
+                                createLeadList = response.body();
+                                createdLoadAdapter = new CreatedLoadAdapter(createLeadList,getContext());
                                 binding.rv.setAdapter(createdLoadAdapter);
                                 binding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
                                 createdLoadAdapter.onRecyclerViewClick(new CreatedLoadAdapter.OnRecyclerViewClickLisner() {
                                     @Override
                                     public void onItemClick(Lead lead, int position, String status) {
                                         if(status.equals("Edit")){
-                                            Toast.makeText(getContext(), "Edit", Toast.LENGTH_SHORT).show();
+                                            BottomSheetFragment bottom = new BottomSheetFragment(getContext(),lead,"edit");
+                                            bottom.show(getFragmentManager(),"");
+
                                         }else if (status.equals("Delete")){
                                             Toast.makeText(getContext(), "Delete", Toast.LENGTH_SHORT).show();
                                         }else if (status.equals("bid")){
@@ -84,6 +93,9 @@ public class HomeFragement extends Fragment {
                                         }
                                     }
                                 });
+                            }
+                            else if (response.code()==404){
+                                Toast.makeText(getContext(), "No new load Found", Toast.LENGTH_SHORT).show();
                             }
                             pd.dismiss();
                         }
@@ -99,7 +111,7 @@ public class HomeFragement extends Fragment {
                     pd.setMessage("Please Wait......");
                     pd.show();
                     Toast.makeText(getContext(), "Confirm Loads", Toast.LENGTH_SHORT).show();
-                    Call<ArrayList<Lead>> call  = userApi.getConfirmLoadsByUserId("rmsFuRPqdwhkgXBZRe1wmyNTeEm1");
+                    Call<ArrayList<Lead>> call  = userApi.getConfirmLoadsByUserId(currentUserId);
                     call.enqueue(new Callback<ArrayList<Lead>>() {
                         @Override
                         public void onResponse(Call<ArrayList<Lead>> call, Response<ArrayList<Lead>> response) {
@@ -129,7 +141,15 @@ public class HomeFragement extends Fragment {
 
             }
         });
-
+        binding.floting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent in = new Intent(MainActivity.this,CreateNewLoadActivity.class);
+//                startActivity(in);
+                BottomSheetFragment bottom = new BottomSheetFragment(getContext());
+                bottom.show(getFragmentManager(),"");
+            }
+        });
 
 
 

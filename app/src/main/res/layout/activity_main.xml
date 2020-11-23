@@ -50,17 +50,6 @@
             android:layout_above="@id/bottom_nav"
             android:id="@+id/frame"
             />
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/floting"
-            android:backgroundTint="@color/blue"
-            android:src="@drawable/plus"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="60dp"
-            android:layout_marginEnd="20dp"/>
-
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav"

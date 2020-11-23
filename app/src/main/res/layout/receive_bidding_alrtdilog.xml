@@ -1,8 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:layout_width="380dp"
     android:layout_height="wrap_content"
     android:padding="10dp"
     android:layout_gravity="center">
+    <ScrollView android:layout_height="match_parent" android:layout_width="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android" >
 
 
         <RelativeLayout
@@ -169,13 +172,13 @@
                         android:textSize="16sp" />
 
                     <Button
-                        android:layout_width="180dp"
+                        android:layout_width="160dp"
                         android:layout_height="40dp"
                         android:id="@+id/btnAccept"
                         android:layout_gravity="center"
                         android:background="@drawable/button_blue"
                         android:text="Accept"
-                        android:textSize="18dp"
+                        android:textSize="16dp"
                         android:textStyle="bold"
                         android:textColor="@color/white"
                         android:layout_marginTop="10dp"
@@ -185,4 +188,5 @@
             </LinearLayout>
 
         </RelativeLayout>
+</ScrollView>
 </LinearLayout>

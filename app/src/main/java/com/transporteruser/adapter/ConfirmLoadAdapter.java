@@ -2,7 +2,7 @@ package com.transporteruser.adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.pm.LauncherActivityInfo;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -15,6 +15,7 @@ import android.widget.PopupMenu;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.transporteruser.ChatActivity;
 import com.transporteruser.bean.Lead;
 import com.transporteruser.databinding.ConfirmLoadBinding;
 import com.transporteruser.databinding.CreatedLoadBinding;
@@ -56,7 +57,9 @@ public class ConfirmLoadAdapter extends RecyclerView.Adapter<ConfirmLoadAdapter.
                         if (title.equals("Material Status")) {
                             getAlertDialog(lead,holder.itemView.getContext());
                         } else if (title.equals("Chat with Transporter")) {
-
+                            Intent in = new Intent(holder.itemView.getContext(), ChatActivity.class);
+                            in.putExtra("transporterId",lead.getDealLockedWith());
+                            holder.itemView.getContext().startActivity(in);
                         }
                         return true;
                     }

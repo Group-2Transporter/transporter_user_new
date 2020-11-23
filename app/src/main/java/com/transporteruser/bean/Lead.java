@@ -35,7 +35,7 @@ public class Lead implements Serializable
     private String dateOfCompletion;
     @SerializedName("timestamp")
     @Expose
-    private Integer timestamp;
+    private long timestamp;
     @SerializedName("status")
     @Expose
     private String status;
@@ -134,11 +134,11 @@ public class Lead implements Serializable
         this.dateOfCompletion = dateOfCompletion;
     }
 
-    public Integer getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Integer timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 
