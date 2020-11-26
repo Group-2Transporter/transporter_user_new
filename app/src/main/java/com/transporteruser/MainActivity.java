@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,11 +19,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 import com.transporteruser.api.UserService;
 import com.transporteruser.bean.User;
 import com.transporteruser.databinding.ActivityMainBinding;
-import com.transporteruser.fragement.BottomSheetFragment;
 import com.transporteruser.fragement.HistoryFragement;
 import com.transporteruser.fragement.HomeFragement;
 
@@ -55,6 +53,12 @@ import retrofit2.Response;
         toggle.syncState();
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
 
+        binding.civProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendUserToUpdateProfile();
+            }
+        });
 
     }
 
@@ -97,6 +101,7 @@ import retrofit2.Response;
                 public void onResponse(Call<User> call, Response<User> response) {
                     if(response.code() == 200){
                         saveDataLocally(response.body());
+
                     }else if(response.code() == 404){
                         sendUserToCreateProfile();
                     }
@@ -108,10 +113,17 @@ import retrofit2.Response;
                 }
             });
         }
+        String image = sp.getString("imageUrl","not_found");
+        String name = sp.getString("name","not_found");
+        if(!image.equalsIgnoreCase("not_found")){
+            Picasso.get().load(image).into(binding.civProfile);
+        }
+        if(!name.equalsIgnoreCase("not_found"))
+            binding.tvUserName.setText(name);
     }
 
        private void sendUserToCreateProfile() {
-            Intent in = new Intent(this,ProfileActivity.class);
+            Intent in = new Intent(this, CreateProfileActivity.class);
             startActivity(in);
             finish();
        }
@@ -134,9 +146,7 @@ import retrofit2.Response;
                 Fragment selected = null;
                 int id=item.getItemId();
                 if(id == R.id.User){
-                    Toast.makeText(MainActivity.this,"User",Toast.LENGTH_SHORT).show();
-                    Intent in = new Intent(MainActivity.this,ProfileActivity.class);
-                    startActivity(in);
+                    sendUserToUpdateProfile();
 
                 }
                 else if(id == R.id.home){
@@ -187,8 +197,13 @@ import retrofit2.Response;
 
     }
 
+       private void sendUserToUpdateProfile() {
+           Intent in = new Intent(MainActivity.this, UpdateProfileActivity.class);
+           startActivity(in);
+       }
 
-    private void sendUserToLoginActivity(){
+
+       private void sendUserToLoginActivity(){
         Intent intent = new Intent(MainActivity.this,LoginActivity.class);
         startActivity(intent);
         SharedPreferences.Editor editor= sp.edit();

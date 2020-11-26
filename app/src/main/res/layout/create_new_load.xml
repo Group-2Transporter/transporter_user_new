@@ -9,7 +9,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp"
-    android:background="@drawable/bottom_sheet_boder"
     android:gravity="center"
     >
 

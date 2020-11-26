@@ -59,6 +59,7 @@ public class ConfirmLoadAdapter extends RecyclerView.Adapter<ConfirmLoadAdapter.
                         } else if (title.equals("Chat with Transporter")) {
                             Intent in = new Intent(holder.itemView.getContext(), ChatActivity.class);
                             in.putExtra("transporterId",lead.getDealLockedWith());
+                            in.putExtra("leadId",lead.getLeadId());
                             holder.itemView.getContext().startActivity(in);
                         }
                         return true;

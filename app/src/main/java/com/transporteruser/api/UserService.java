@@ -15,6 +15,7 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -23,16 +24,15 @@ import retrofit2.http.Path;
 
 
 public class UserService {
-    private final static String BASE_URL = "http://192.168.0.111:8080/";
     public static UserApi transportApi;
 
     public static UserApi getTransporterApiIntance() {
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(100, TimeUnit.SECONDS)
-                .readTimeout(100,TimeUnit.SECONDS).build();
+                .readTimeout(100, TimeUnit.SECONDS).build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(ServerAddress.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();
@@ -43,13 +43,14 @@ public class UserService {
 
     public interface UserApi {
         @Multipart
-        @POST("/user/")
-        public Call<User> saveProfile(@Part MultipartBody.Part file,
-                                      @Part("userId") RequestBody userId,
-                                      @Part("name") RequestBody name,
-                                      @Part("address") RequestBody address,
-                                      @Part("contactNumber") RequestBody contactNumber,
-                                      @Part("token") RequestBody token);
+        @POST("user/")
+        public Call<User> saveProfile(
+                @Part MultipartBody.Part file,
+                @Part("userId") RequestBody userId,
+                @Part("name") RequestBody name,
+                @Part("address") RequestBody address,
+                @Part("contactNumber") RequestBody contactNumber,
+                @Part("token") RequestBody token);
 
         @GET("lead/createLead/{userId}")
         public Call<ArrayList<Lead>> getCreateLoadsByUserId(@Path("userId") String userId);
@@ -58,13 +59,13 @@ public class UserService {
         public Call<ArrayList<Lead>> getConfirmLoadsByUserId(@Path("userId") String userId);
 
         @GET("bid/{leadId}")
-        public Call<ArrayList<Bid>> getAllBidsByLeadId(@Path("leadId")String leadId);
+        public Call<ArrayList<Bid>> getAllBidsByLeadId(@Path("leadId") String leadId);
 
-        @GET("/lead/completeLead/{userId}")
-        public Call<ArrayList<Lead>>getAllCompletedLead(@Path("userId")String userId);
+        @GET("lead/completeLead/{userId}")
+        public Call<ArrayList<Lead>> getAllCompletedLead(@Path("userId") String userId);
 
-        @POST("/lead/update/{leadId}")
-        public  Call <Lead> updateLead(@Path("leadId")String leadId,@Body Lead lead);
+        @POST("lead/update/{leadId}")
+        public Call<Lead> updateLead(@Path("leadId") String leadId, @Body Lead lead);
 
         @GET("user/{id}")
         public Call<User> getCurrentUser(@Path("id") String id);
@@ -72,14 +73,22 @@ public class UserService {
         @GET("transporter/{id}")
         public Call<Transporter> getTransporter(@Path("id") String id);
 
-        @GET("user/update")
+        @POST("/user/update")
         public Call<User> updateUser(@Body User user);
 
-        @POST("/lead/")
+        @Multipart
+        @POST("user/update/image")
+        public Call<User> updateUserImage(@Part MultipartBody.Part file,@Part("userId") RequestBody userId);
+
+        @POST("lead/")
         public Call<Lead> createLead(@Body Lead lead);
 
-        @GET("/lead/{leadId}")
-        public Call<Lead> singleLeadById(@Path("leadId")String leadId);
+        @GET("lead/{leadId}")
+        public Call<Lead> singleLeadById(@Path("leadId") String leadId);
+
+        @DELETE("lead/{leadId}")
+        public Call<Lead> deleteLeadByLeadId(@Path("leadId") String leadId);
+
 
     }
 }

@@ -12,6 +12,7 @@
         <androidx.appcompat.widget.Toolbar
             android:layout_height="?attr/actionBarSize"
             android:layout_width="match_parent"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:id="@+id/ToolBar"
             android:background="@color/blue"
             app:title="Create Profile"
@@ -53,7 +54,6 @@
                 android:inputType="text"
                 android:padding="10dp"
                 android:textAlignment="textStart"
-                android:textColorHint="@color/blue"
                 android:textSize="16sp" />
 
             <EditText
@@ -64,14 +64,14 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="20dp"
                 android:drawableRight="@drawable/phone"
+                android:maxLength="10"
+                android:inputType="number"
                 android:hint="Phone Number"
                 android:padding="10dp"
                 android:textAlignment="textStart"
-                android:textColorHint="@color/blue"
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/tvaddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -80,6 +80,7 @@
                 android:text="  Address"
                 android:textAlignment="textStart"
                 android:textColor="@color/blue"
+                android:layout_marginBottom="-3dp"
                 android:textSize="18sp" />
             <LinearLayout
                 android:layout_width="match_parent"
@@ -89,6 +90,7 @@
                 android:layout_marginRight="20dp"
                 android:orientation="vertical"
                 android:padding="7dp"
+                android:elevation="10dp"
                 android:background="@drawable/boder_comfirm_load">
                 <EditText
                     android:layout_width="match_parent"
@@ -96,21 +98,21 @@
                     android:hint="Street Address"
                     android:textAlignment="textStart"
                     android:textColorHint="@color/blue"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:id="@+id/etStreetAddress"/>
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="city"
                     android:textAlignment="textStart"
-                    android:textColorHint="@color/blue"
+                    android:id="@+id/etCityAddress"
                     android:textSize="16sp" />
                 <EditText
-                    android:id="@+id/spinner"
+                    android:id="@+id/etStateAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="State"
                     android:textAlignment="textStart"
-                    android:textColorHint="@color/blue"
                     android:textSize="16sp"
                     />
 
@@ -126,7 +128,7 @@
                 android:layout_marginRight="30dp"
                 android:background="@drawable/button_blue"
                 android:text="Create"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:layout_marginBottom="20dp"

@@ -50,6 +50,7 @@ public class ChatActivity extends AppCompatActivity {
     MessageAdapter adapter;
     ArrayList<Message>al;
     Transporter transporter;
+    String leadId;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +60,7 @@ public class ChatActivity extends AppCompatActivity {
         Intent in = getIntent();
         currentUserId = FirebaseAuth.getInstance().getUid();
         transporterId = in.getStringExtra("transporterId");
+        leadId = in.getStringExtra("leadId");
         UserService.UserApi userApi = UserService.getTransporterApiIntance();
         Call<Transporter> call = userApi.getTransporter(transporterId);
         if (InternetUtility.isNetworkConnected(this)) {
@@ -66,7 +68,6 @@ public class ChatActivity extends AppCompatActivity {
             call.enqueue(new Callback<Transporter>() {
                 @Override
                 public void onResponse(Call<Transporter> call, Response<Transporter> response) {
-                    Toast.makeText(ChatActivity.this, ""+response.code(), Toast.LENGTH_SHORT).show();
                     if(response.code() == 200){
                         transporter = response.body();
                         binding.tvName.setText(transporter.getName());
@@ -76,7 +77,6 @@ public class ChatActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<Transporter> call, Throwable t) {
-                    Toast.makeText(ChatActivity.this, ""+t, Toast.LENGTH_SHORT).show();
                 }
             });
         } else {
@@ -101,11 +101,11 @@ public class ChatActivity extends AppCompatActivity {
                     final String messageId = FirebaseDatabase.getInstance().getReference().push().getKey();
                     binding.etMessage.setText("");
                     final Message msg = new Message(messageId, currentUserId, transporterId, message, timeStamp);
-                    firebaseDatabase.child("Messages").child(currentUserId).child(transporterId).child(messageId).setValue(msg).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    firebaseDatabase.child("Messages").child(leadId).child(currentUserId).child(transporterId).child(messageId).setValue(msg).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                firebaseDatabase.child("Messages").child(transporterId).child(currentUserId).child(messageId).setValue(msg).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                firebaseDatabase.child("Messages").child(leadId).child(transporterId).child(currentUserId).child(messageId).setValue(msg).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (!task.isSuccessful()) {
@@ -124,8 +124,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
         al = new ArrayList<>();
-        Toast.makeText(this, ""+currentUserId, Toast.LENGTH_SHORT).show();
-        firebaseDatabase.child("Messages").child(currentUserId).child(transporterId).orderByChild("timeStamp").addChildEventListener(new ChildEventListener() {
+        firebaseDatabase.child("Messages").child(leadId).child(currentUserId).child(transporterId).orderByChild("timeStamp").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 if(dataSnapshot.exists()){

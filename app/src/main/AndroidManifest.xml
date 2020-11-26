@@ -22,10 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ChatActivity"/>
-        <activity android:name=".MainActivity">
-        </activity>
         <activity android:name=".LoginActivity"/>
+        <activity android:name=".MainActivity"/>
         <service
             android:name=".ReceivingPushNotification">
             <intent-filter>
@@ -37,7 +35,9 @@
         <activity android:name=".ContactUs" android:parentActivityName=".MainActivity"/>
         <activity android:name=".PrivacyPolicy" android:parentActivityName=".MainActivity"/>
         <activity android:name=".BidActivity" android:parentActivityName=".MainActivity"/>
-        <activity android:name=".ProfileActivity"/>
+        <activity android:name=".CreateProfileActivity"/>
+        <activity android:name=".UpdateProfileActivity" android:parentActivityName=".MainActivity"/>
+        <activity android:name=".ChatActivity"/>
 
     </application>
 

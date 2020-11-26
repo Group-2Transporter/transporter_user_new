@@ -10,9 +10,7 @@
         card_view:cardCornerRadius="12dp"
         card_view:cardElevation="10dp"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp">
+        android:layout_margin="10dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -25,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="40dp"
                 android:layout_alignParentEnd="true"
                 >
             <ImageView
@@ -33,6 +31,7 @@
                 android:layout_height="30dp"
                 android:src="@drawable/kis"
                 android:id="@+id/kis"
+                android:layout_marginRight="5dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center_horizontal"/>
@@ -42,7 +41,8 @@
                 android:layout_width="wrap_content"
                 android:text="3/12/2020"
                 android:layout_below="@id/kis"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginRight="5dp"
                 android:layout_alignParentEnd="true" />
             </LinearLayout>
 
@@ -50,14 +50,15 @@
                 android:id="@+id/llLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
 
                 <ImageView
 
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/location"
-                    android:layout_marginBottom="-3dp"/>
+                    />
 
                 <TextView
                     android:singleLine="true"
@@ -65,11 +66,10 @@
                     style="@style/comfirm_load_textView"
                     android:layout_width="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="-3dp"
+                    android:layout_marginLeft="3dp"
                     android:textStyle="bold"
                     android:text="Source to Destination Add : "
-
-                    android:layout_marginBottom="-3dp"/>
+                    />
 
             </LinearLayout>
 
@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/llLocation"
                 android:orientation="vertical"
-                android:layout_marginLeft="22dp">
+                android:layout_marginLeft="28dp">
 
                 <LinearLayout
                     android:id="@+id/llMaterialType"
@@ -107,6 +107,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/llMaterialType"
+                    android:layout_marginTop="5dp"
                    >
 
                     <TextView
@@ -129,6 +130,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/llName"
+                    android:layout_marginTop="5dp"
                     >
 
                     <TextView

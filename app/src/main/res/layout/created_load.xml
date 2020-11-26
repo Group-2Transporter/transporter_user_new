@@ -12,10 +12,8 @@
         card_view:cardCornerRadius="10dp"
         android:elevation="10dp"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        card_view:cardElevation="10dp">
+        android:layout_margin="10dp"
+        card_view:cardElevation="15dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -48,7 +46,6 @@
                         android:layout_weight="0.1"
                         android:layout_height="30dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="-3dp"
                         android:src="@drawable/location" />
 
                     <TextView
@@ -58,8 +55,6 @@
                         android:layout_weight="0.7"
                         android:layout_gravity="center"
                         android:singleLine="true"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="-3dp"
                         android:text="Source to Destination Add : "
                         android:textStyle="bold" />
 
@@ -98,6 +93,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/llName"
+                        android:layout_marginTop="5dp"
                         >
 
                         <TextView
@@ -116,30 +112,35 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-            android:layout_alignParentEnd="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/count"
-            android:id="@+id/counter" >
-            <TextView android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="10"
-                android:textSize="10dp"
-                android:id="@+id/tvCount"
-                android:layout_margin="10dp"
 
-                />
-        </LinearLayout>
             <ImageView
                 android:id="@+id/ivMoreVert"
-                android:layout_width="30dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="-3dp"
+                android:layout_width="25dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="3dp"
                 android:src="@drawable/more_vert"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@id/counter"
+
+
             />
+            <LinearLayout
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/count"
+                android:id="@+id/counter"
+                android:layout_marginRight="2dp"
+                android:layout_below="@id/ivMoreVert">
+                <TextView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10"
+                    android:textSize="10dp"
+                    android:id="@+id/tvCount"
+                    android:layout_margin="10dp"
+
+                    />
+            </LinearLayout>
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

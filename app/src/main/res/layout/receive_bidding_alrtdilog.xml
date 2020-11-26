@@ -40,7 +40,7 @@
                     android:layout_marginLeft="5dp"
                     android:textStyle="bold"
                     android:text="Source to Destination Add : "
-                    android:textSize="20sp"
+                    android:textSize="17sp"
                     android:padding="5dp"
                     android:layout_marginTop="15dp"
                     />
@@ -166,7 +166,7 @@
                         android:layout_height="100dp"
                         android:layout_marginRight="8dp"
                         android:background="@drawable/boder_comfirm_load"
-                        android:elevation="5dp"
+                        android:elevation="10dp"
                         android:hint="bahut badiya hai aapki "
                         android:padding="8dp"
                         android:textSize="16sp" />
