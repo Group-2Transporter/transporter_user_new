@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:gravity="center"
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/boder_comfirm_load"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:elevation="10dp"
+        android:layout_margin="5dp">
+
+        <EditText
+            style="@style/comfirm_load_textView"
+            android:hint="Material Type"
+            android:id="@+id/materialtype"
+            android:textSize="16sp" />
+
+        <TextView
+            style="@style/comfirm_load_textView"
+            android:text="Pickup Address"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/boder_comfirm_load"
+            android:elevation="5dp"
+            android:orientation="vertical"
+            android:padding="5dp" >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Street"
+                android:textSize="14dp"
+                android:id="@+id/pk_street"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="city"
+                android:textSize="14dp"
+                android:id="@+id/pk_city"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="State"
+                android:textSize="14dp"
+                android:id="@+id/pk_state"/>
+        </LinearLayout>
+
+        <TextView
+            style="@style/comfirm_load_textView"
+            android:text="Destintion Address"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/boder_comfirm_load"
+            android:elevation="5dp"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Street"
+                android:textSize="14dp"
+                android:id="@+id/dv_street"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="City"
+                android:textSize="14dp"
+                android:id="@+id/dv_city"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="State"
+                android:textSize="14dp"
+                android:id="@+id/dv_state"/>
+        </LinearLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Weight"
+            android:textSize="16dp"
+            android:layout_marginTop="10dp"
+            android:inputType="number"
+            android:id="@+id/weight"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Pickup contact"
+            android:textSize="16dp"
+            android:maxLength="10"
+            android:id="@+id/pickup_contacte"
+            android:inputType="number"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Delivery Contact"
+            android:textSize="16dp"
+            android:maxLength="10"
+            android:inputType="number"
+            android:id="@+id/dv_contacte"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Last Date"
+            android:textSize="14dp"
+            android:inputType="date"
+            android:id="@+id/et_lastdate"/>
+
+        <Button
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:text="Create Load"
+            android:background="@drawable/button_blue"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_width="150dp"
+            android:textColor="@color/white"
+            android:layout_marginBottom="10dp"
+            android:elevation="10dp"
+            android:id="@+id/btn_create_load"/>
+    </LinearLayout>
+    </LinearLayout>
+</ScrollView>

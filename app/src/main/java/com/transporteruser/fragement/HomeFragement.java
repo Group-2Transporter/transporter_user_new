@@ -1,7 +1,10 @@
 package com.transporteruser.fragement;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.transporteruser.BidActivity;
+import com.transporteruser.MainActivity;
 import com.transporteruser.adapter.ConfirmLoadAdapter;
 import com.transporteruser.adapter.CreatedLoadAdapter;
 import com.transporteruser.api.UserService;
@@ -39,6 +43,9 @@ public class HomeFragement extends Fragment {
     String currentUserId;
     String spin;
     ProgressDialog pd;
+    ArrayList<Lead> createLeadList;
+    UserService.UserApi userApi;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -55,55 +62,87 @@ public class HomeFragement extends Fragment {
             @Override
             public void onItemSelected(final AdapterView<?> adapterView, View view, int i, long l) {
                 spin = binding.spinner.getSelectedItem().toString();
-                UserService.UserApi userApi = UserService.getTransporterApiIntance();
-                if(spin.equals("New Created Loads")){
+                userApi = UserService.getTransporterApiIntance();
+                if (spin.equals("New Created Loads")) {
                     pd = new ProgressDialog(getContext());
                     pd.setMessage("Please Wait......");
+                    //pd.setCancelable(false);
                     pd.show();
-                    Call<ArrayList<Lead>> call = userApi.getCreateLoadsByUserId("rmsFuRPqdwhkgXBZRe1wmyNTeEm1");
+
+                    Call<ArrayList<Lead>> call = userApi.getCreateLoadsByUserId(currentUserId);
                     call.enqueue(new Callback<ArrayList<Lead>>() {
                         @Override
                         public void onResponse(Call<ArrayList<Lead>> call, Response<ArrayList<Lead>> response) {
-                            if(response.code()==200) {
-                                  createdLoadAdapter = new CreatedLoadAdapter(response.body(),getContext());
+                            if (response.code() == 200) {
+                                createLeadList = response.body();
+                                createdLoadAdapter = new CreatedLoadAdapter(createLeadList, getContext());
                                 binding.rv.setAdapter(createdLoadAdapter);
                                 binding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
                                 createdLoadAdapter.onRecyclerViewClick(new CreatedLoadAdapter.OnRecyclerViewClickLisner() {
                                     @Override
-                                    public void onItemClick(Lead lead, int position, String status) {
-                                        if(status.equals("Edit")){
-                                            Toast.makeText(getContext(), "Edit", Toast.LENGTH_SHORT).show();
-                                        }else if (status.equals("Delete")){
-                                            Toast.makeText(getContext(), "Delete", Toast.LENGTH_SHORT).show();
-                                        }else if (status.equals("bid")){
+                                    public void onItemClick(final Lead lead, int position, final String status) {
+                                        if (status.equals("Edit")) {
+                                            BottomSheetFragment bottom = new BottomSheetFragment(getContext(), lead, "edit");
+                                            bottom.show(getFragmentManager(), "");
+
+                                        } else if (status.equals("Delete")) {
+
+                                            final AlertDialog.Builder ab = new AlertDialog.Builder(getContext());
+                                            ab.setTitle("DELETE");
+                                            ab.setMessage("Are You Sure ?");
+                                            ab.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    userApi.deleteLeadByLeadId(lead.getLeadId()).enqueue(new Callback<Lead>() {
+                                                        @Override
+                                                        public void onResponse(Call<Lead> call, Response<Lead> response) {
+                                                            if (response.code() == 200) {
+                                                                Toast.makeText(getContext(), "Lead Deleted", Toast.LENGTH_SHORT).show();
+                                                            } else
+                                                                Toast.makeText(getContext(), "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                                                        }
+
+                                                        @Override
+                                                        public void onFailure(Call<Lead> call, Throwable t) {
+                                                            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                            ab.setNegativeButton("No",null);
+                                            ab.show();
+
+                                        } else if (status.equals("bid")) {
                                             Intent in = new Intent(getContext(), BidActivity.class);
-                                            in.putExtra("lead",lead);
-                                            String address = lead.getPickUpAddress()+" To "+lead.getDeliveryAddress();
-                                            in.putExtra("location",address);
+                                            in.putExtra("lead", lead);
+                                            String address = lead.getPickUpAddress() + " To " + lead.getDeliveryAddress();
+                                            in.putExtra("location", address);
                                             startActivity(in);
                                         }
                                     }
                                 });
+                            } else if (response.code() == 404) {
+                                Toast.makeText(getContext(), "No new load Found", Toast.LENGTH_SHORT).show();
                             }
                             pd.dismiss();
                         }
+
                         @Override
                         public void onFailure(Call<ArrayList<Lead>> call, Throwable t) {
-                            Toast.makeText(getContext(), ""+t, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "" + t, Toast.LENGTH_SHORT).show();
                             pd.dismiss();
                         }
                     });
-                }
-                else if (spin.equals("Confirmed Loads")){
+                } else if (spin.equals("Confirmed Loads")) {
                     pd = new ProgressDialog(getContext());
                     pd.setMessage("Please Wait......");
                     pd.show();
                     Toast.makeText(getContext(), "Confirm Loads", Toast.LENGTH_SHORT).show();
-                    Call<ArrayList<Lead>> call  = userApi.getConfirmLoadsByUserId("rmsFuRPqdwhkgXBZRe1wmyNTeEm1");
+                    Call<ArrayList<Lead>> call = userApi.getConfirmLoadsByUserId(currentUserId);
                     call.enqueue(new Callback<ArrayList<Lead>>() {
                         @Override
                         public void onResponse(Call<ArrayList<Lead>> call, Response<ArrayList<Lead>> response) {
-                            if(response.code()==200) {
+                            if (response.code() == 200) {
                                 adapter = new ConfirmLoadAdapter(response.body());
                                 binding.rv.setAdapter(adapter);
                                 binding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -113,8 +152,8 @@ public class HomeFragement extends Fragment {
 
                         @Override
                         public void onFailure(Call<ArrayList<Lead>> call, Throwable t) {
-                            Toast.makeText(getContext(), "Soething went wrong "+t, Toast.LENGTH_SHORT).show();
-                            Log.e("Error : ","===>"+t);
+                            Toast.makeText(getContext(), "Soething went wrong " + t, Toast.LENGTH_SHORT).show();
+                            Log.e("Error : ", "===>" + t);
                             pd.dismiss();
                         }
                     });
@@ -129,8 +168,13 @@ public class HomeFragement extends Fragment {
 
             }
         });
-
-
+        binding.floting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BottomSheetFragment bottom = new BottomSheetFragment(getContext());
+                bottom.show(getFragmentManager(), "");
+            }
+        });
 
 
         return binding.getRoot();

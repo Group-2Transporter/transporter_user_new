@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.transporteruser.BidActivity;
 import com.transporteruser.bean.Lead;
 import com.transporteruser.databinding.CreatedLoadBinding;
+import com.transporteruser.fragement.BottomSheetFragment;
 
 import java.util.ArrayList;
 
@@ -43,7 +44,7 @@ public class CreatedLoadAdapter extends RecyclerView.Adapter<CreatedLoadAdapter.
         holder.binding.tvTypeOfaterial.setText(lead.getTypeOfMaterial());
         if(lead.getBidCount() >= 1 && lead.getBidCount()<=9) {
             holder.binding.counter.setVisibility(View.VISIBLE);
-            holder.binding.tvCount.setText("0" + lead.getBidCount());
+            holder.binding.tvCount.setText("" + lead.getBidCount());
         }
         else if (lead.getBidCount() == 0)
             holder.binding.counter.setVisibility(View.GONE);
@@ -81,6 +82,7 @@ public class CreatedLoadAdapter extends RecyclerView.Adapter<CreatedLoadAdapter.
                             if (title.equals("Edit")) {
                                 if(position!=RecyclerView.NO_POSITION && lisner!=null){
                                     lisner.onItemClick(lead,position,"Edit");
+
                                 }
                             } else if (title.equals("Delete")) {
                                 if(position!=RecyclerView.NO_POSITION && lisner!=null){

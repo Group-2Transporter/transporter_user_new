@@ -25,7 +25,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="Transporter"
+                    android:text="User Name"
+                    android:id="@+id/tvUserName"
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     />
@@ -37,6 +38,7 @@
                     android:background="@drawable/profile"
                     android:layout_alignParentEnd="true"
                     android:padding="5dp"
+                    android:id="@+id/civProfile"
                     android:layout_marginEnd="10dp"
                     android:layout_marginTop="3dp"
                     />
@@ -50,17 +52,6 @@
             android:layout_above="@id/bottom_nav"
             android:id="@+id/frame"
             />
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/floting"
-            android:backgroundTint="@color/blue"
-            android:src="@drawable/plus"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="60dp"
-            android:layout_marginEnd="20dp"/>
-
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav"

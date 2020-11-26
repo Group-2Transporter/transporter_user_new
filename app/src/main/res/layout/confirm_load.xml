@@ -8,10 +8,9 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         card_view:cardCornerRadius="12dp"
-       card_view:cardElevation="10dp"
+       card_view:cardElevation="15dp"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_margin="10dp"
         android:layout_marginLeft="10dp">
 
         <RelativeLayout
@@ -29,14 +28,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                >
 
                 <ImageView
 
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/location"
-                    android:layout_marginBottom="-3dp"/>
+                    android:layout_marginBottom="-3dp"
+                    android:layout_marginTop="7dp"/>
 
                 <TextView
                     android:id="@+id/tvAddress"
@@ -46,6 +47,7 @@
                     android:singleLine="true"
                     android:layout_marginLeft="3dp"
                     android:textStyle="bold"
+                    android:layout_marginTop="3dp"
                     android:text="Source to Destination Add : "
                     android:layout_marginBottom="-3dp"/>
 
@@ -64,6 +66,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/llLocation"
+                    android:layout_marginTop="5dp"
                    >
 
                     <TextView
@@ -83,6 +86,7 @@
                     android:id="@+id/llName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:layout_below="@id/llMaterialType">
 
                     <TextView
@@ -104,7 +108,8 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/llName">
+                    android:layout_below="@id/llName"
+                    android:layout_marginTop="5dp">
 
                     <TextView
                         style="@style/comfirm_load_textView"
@@ -128,8 +133,9 @@
                 android:id="@+id/ivMoreVert"
                 android:layout_width="30dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="-3dp"
                 android:src="@drawable/more_vert"
+                android:layout_below="@id/llLocation"
                 android:layout_alignParentEnd="true"/>
 
                 <ImageView
@@ -137,6 +143,7 @@
                     android:layout_below="@+id/ivMoreVert"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:layout_marginTop="5dp"
                     android:src="@drawable/check_circle" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

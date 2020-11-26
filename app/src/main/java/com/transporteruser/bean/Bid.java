@@ -1,4 +1,5 @@
 package com.transporteruser.bean;
+
 import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

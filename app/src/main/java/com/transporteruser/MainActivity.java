@@ -6,8 +6,8 @@ import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,22 +19,31 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
+import com.transporteruser.api.UserService;
+import com.transporteruser.bean.User;
 import com.transporteruser.databinding.ActivityMainBinding;
 import com.transporteruser.fragement.HistoryFragement;
 import com.transporteruser.fragement.HomeFragement;
 
-public class MainActivity extends AppCompatActivity {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+   public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     ActionBarDrawerToggle toggle;
-    FirebaseUser currentUser;
+    String currentUserId;
+    SharedPreferences sp = null;
+    String user ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding =ActivityMainBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        currentUserId = FirebaseAuth.getInstance().getUid();
+        sp = getSharedPreferences("user",MODE_PRIVATE);
         binding.navDrawer.setItemIconTintList(null);
         binding.bottomNav.setItemIconTintList(null);
         getFragment();
@@ -44,7 +53,15 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
 
+        binding.civProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendUserToUpdateProfile();
+            }
+        });
+
     }
+
     private void getFragment(){
         binding.bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -56,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.history:
                         fragment = new HistoryFragement();
-                        binding.floting.setVisibility(View.GONE);
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame,fragment).commit();
                 return true;
@@ -64,6 +80,64 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(currentUserId ==null){
+            sendUserToLoginActivity();
+        }else{
+            checkProfileCreatedOrNot();
+        }
+
+    }
+
+    private void checkProfileCreatedOrNot(){
+        String status = sp.getString("userId","not_created");
+        if(status.equals("not_created")){
+            UserService.UserApi userApi = UserService.getTransporterApiIntance();
+            Call<User> call  = userApi.getCurrentUser(currentUserId);
+            call.enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    if(response.code() == 200){
+                        saveDataLocally(response.body());
+
+                    }else if(response.code() == 404){
+                        sendUserToCreateProfile();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+
+                }
+            });
+        }
+        String image = sp.getString("imageUrl","not_found");
+        String name = sp.getString("name","not_found");
+        if(!image.equalsIgnoreCase("not_found")){
+            Picasso.get().load(image).into(binding.civProfile);
+        }
+        if(!name.equalsIgnoreCase("not_found"))
+            binding.tvUserName.setText(name);
+    }
+
+       private void sendUserToCreateProfile() {
+            Intent in = new Intent(this, CreateProfileActivity.class);
+            startActivity(in);
+            finish();
+       }
+
+       private void saveDataLocally(User user){
+           SharedPreferences.Editor editor = sp.edit();
+           editor.putString("name",user.getName());
+           editor.putString("userId",user.getUserId());
+           editor.putString("imageUrl",user.getImageUrl());
+           editor.putString("address",user.getAddress());
+           editor.putString("contactNo",user.getContactNumber());
+           editor.putString("token",user.getToken());
+             editor.commit();
+       }
     private void drawerInitialize(){
         binding.navDrawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -72,7 +146,8 @@ public class MainActivity extends AppCompatActivity {
                 Fragment selected = null;
                 int id=item.getItemId();
                 if(id == R.id.User){
-                    Toast.makeText(MainActivity.this,"User",Toast.LENGTH_SHORT).show();
+                    sendUserToUpdateProfile();
+
                 }
                 else if(id == R.id.home){
                     selected = new HomeFragement();
@@ -122,17 +197,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        if(currentUser==null){
-//            sendUserToLoginActivity();
-//        }
-//    }
-    private void sendUserToLoginActivity(){
+       private void sendUserToUpdateProfile() {
+           Intent in = new Intent(MainActivity.this, UpdateProfileActivity.class);
+           startActivity(in);
+       }
+
+
+       private void sendUserToLoginActivity(){
         Intent intent = new Intent(MainActivity.this,LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+        SharedPreferences.Editor editor= sp.edit();
+        editor.clear();
+        editor.commit();
         finish();
     }
 }
