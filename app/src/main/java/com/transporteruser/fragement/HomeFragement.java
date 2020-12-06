@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.transporteruser.BidActivity;
 import com.transporteruser.MainActivity;
+import com.transporteruser.ProgressBar;
 import com.transporteruser.adapter.ConfirmLoadAdapter;
 import com.transporteruser.adapter.CreatedLoadAdapter;
 import com.transporteruser.api.UserService;
@@ -42,7 +43,7 @@ public class HomeFragement extends Fragment {
     CreatedLoadAdapter createdLoadAdapter;
     String currentUserId;
     String spin;
-    ProgressDialog pd;
+    ProgressBar pd;
     ArrayList<Lead> createLeadList;
     UserService.UserApi userApi;
 
@@ -64,10 +65,8 @@ public class HomeFragement extends Fragment {
                 spin = binding.spinner.getSelectedItem().toString();
                 userApi = UserService.getTransporterApiIntance();
                 if (spin.equals("New Created Loads")) {
-                    pd = new ProgressDialog(getContext());
-                    pd.setMessage("Please Wait......");
-                    //pd.setCancelable(false);
-                    pd.show();
+                    pd = new ProgressBar(getActivity());
+                    pd.startLoadingDialog();
 
                     Call<ArrayList<Lead>> call = userApi.getCreateLoadsByUserId(currentUserId);
                     call.enqueue(new Callback<ArrayList<Lead>>() {
@@ -124,37 +123,42 @@ public class HomeFragement extends Fragment {
                             } else if (response.code() == 404) {
                                 Toast.makeText(getContext(), "No new load Found", Toast.LENGTH_SHORT).show();
                             }
-                            pd.dismiss();
+                            pd.dismissDialog();
                         }
 
                         @Override
                         public void onFailure(Call<ArrayList<Lead>> call, Throwable t) {
                             Toast.makeText(getContext(), "" + t, Toast.LENGTH_SHORT).show();
-                            pd.dismiss();
+                            pd.dismissDialog();
                         }
                     });
                 } else if (spin.equals("Confirmed Loads")) {
-                    pd = new ProgressDialog(getContext());
-                    pd.setMessage("Please Wait......");
-                    pd.show();
+                    pd = new ProgressBar(getActivity());
+                    pd.startLoadingDialog();
                     Toast.makeText(getContext(), "Confirm Loads", Toast.LENGTH_SHORT).show();
                     Call<ArrayList<Lead>> call = userApi.getConfirmLoadsByUserId(currentUserId);
                     call.enqueue(new Callback<ArrayList<Lead>>() {
                         @Override
                         public void onResponse(Call<ArrayList<Lead>> call, Response<ArrayList<Lead>> response) {
                             if (response.code() == 200) {
+                                binding.noReord.setVisibility(View.GONE);
+                                binding.rv.setVisibility(View.VISIBLE);
                                 adapter = new ConfirmLoadAdapter(response.body());
                                 binding.rv.setAdapter(adapter);
                                 binding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
                             }
-                            pd.dismiss();
+                            else if(response.code()==404){
+                                binding.noReord.setVisibility(View.VISIBLE);
+                                binding.rv.setVisibility(View.GONE);
+                            }
+                            pd.dismissDialog();
                         }
 
                         @Override
                         public void onFailure(Call<ArrayList<Lead>> call, Throwable t) {
                             Toast.makeText(getContext(), "Soething went wrong " + t, Toast.LENGTH_SHORT).show();
                             Log.e("Error : ", "===>" + t);
-                            pd.dismiss();
+                            pd.dismissDialog();
                         }
                     });
 
@@ -171,8 +175,10 @@ public class HomeFragement extends Fragment {
         binding.floting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BottomSheetFragment bottom = new BottomSheetFragment(getContext());
+                final BottomSheetFragment bottom = new BottomSheetFragment(getContext(),createdLoadAdapter,createLeadList);
                 bottom.show(getFragmentManager(), "");
+                bottom.setCancelable(false);
+
             }
         });
 

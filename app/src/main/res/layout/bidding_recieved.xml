@@ -1,12 +1,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="180dp"
-    android:padding="10dp">
+    android:layout_height="wrap_content"
+    android:padding="5dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:clickable="true"
         card_view:cardCornerRadius="10dp"
         android:elevation="20dp"
@@ -18,17 +18,16 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="5dp"
-            android:id="@+id/rv"
-            android:elevation="10dp">
+            android:layout_height="wrap_content"
+            android:id="@+id/rv">
 
             <LinearLayout
                 android:id="@+id/llLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="15dp"
+                >
 
                 <TextView
                     android:id="@+id/tv_Name"
@@ -53,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/llLocation"
                 android:orientation="vertical"
-                android:layout_marginTop="3dp">
+                android:layout_marginTop="10dp">
 
                 <LinearLayout
                     android:id="@+id/llMaterialType"
@@ -81,7 +80,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/llName"
                     android:layout_marginLeft="17dp"
-                    android:layout_marginTop="3dp"
+                    android:layout_marginTop="10dp"
                     android:id="@+id/li_date">
 
                     <TextView
@@ -98,23 +97,21 @@
                 </LinearLayout>
             </LinearLayout>
 
+
             <TextView
+                android:layout_below="@id/lll"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_below="@id/lll"
                 android:text=" More Detail "
                 android:gravity="center"
                 android:textStyle="bold"
-                android:layout_centerInParent="true"
                 android:textSize="16dp"
                 android:id="@+id/moreButton"
-                android:background="#1DDACCCC"
+                android:background="#edeaea"
                 android:layout_marginTop="15dp"
-                android:layout_alignParentEnd="true"
-                android:elevation="20dp"
                 />
-
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
+
 </LinearLayout>

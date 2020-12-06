@@ -36,13 +36,13 @@ public class MessageAdapter extends ArrayAdapter {
 
 
         if (currentUser.equals(message.getFrom())) {
-            binding.received.setVisibility(View.GONE);
-            binding.sent.setVisibility(View.VISIBLE);
+            binding.tvChatRecive.setVisibility(View.GONE);
+            binding.tvChatSent.setVisibility(View.VISIBLE);
             binding.tvChatSent.setText(message.getMessage());
         } else {
-            binding.received.setVisibility(View.VISIBLE);
-            binding.sent.setVisibility(View.GONE);
-            binding.tvChatReceived.setText(message.getMessage());
+            binding.tvChatRecive.setVisibility(View.VISIBLE);
+            binding.tvChatSent.setVisibility(View.GONE);
+            binding.tvChatRecive.setText(message.getMessage());
         }
 
         return binding.getRoot();

@@ -43,6 +43,7 @@ public class ConfirmLoadAdapter extends RecyclerView.Adapter<ConfirmLoadAdapter.
         holder.binding.tvLastDate.setText(lead.getDateOfCompletion());
         holder.binding.tvTypeOfaterial.setText(lead.getTypeOfMaterial());
         holder.binding.tvTransporterName.setText(lead.getTransporterName());
+        holder.binding.tvWeight.setText(lead.getWeight());
         holder.binding.ivMoreVert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

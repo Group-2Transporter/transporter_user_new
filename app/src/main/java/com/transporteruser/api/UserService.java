@@ -2,6 +2,7 @@ package com.transporteruser.api;
 
 import com.transporteruser.bean.Bid;
 import com.transporteruser.bean.Lead;
+import com.transporteruser.bean.Token;
 import com.transporteruser.bean.Transporter;
 import com.transporteruser.bean.User;
 
@@ -89,6 +90,11 @@ public class UserService {
         @DELETE("lead/{leadId}")
         public Call<Lead> deleteLeadByLeadId(@Path("leadId") String leadId);
 
+        @GET("user/token")
+        public Call<ArrayList<Token>> getTokens();
+
+        @DELETE("bid/allbids/{leadId}")
+        public Call<ArrayList<Bid>> deleteBidsByLeadId(@Path("leadId") String leadId);
 
     }
 }

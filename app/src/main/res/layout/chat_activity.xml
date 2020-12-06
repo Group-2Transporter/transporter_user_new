@@ -60,7 +60,7 @@
         android:id="@+id/ll"
         android:layout_margin="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="65dp"
         android:background="@drawable/boder_comfirm_load"
         android:layout_alignParentBottom="true"
         android:weightSum="1"

@@ -14,7 +14,7 @@ import com.transporteruser.databinding.BiddingRecievedBinding;
 
 import java.util.ArrayList;
 
-public class BidReceivedShowAdapter extends RecyclerView.Adapter<BidReceivedShowAdapter.BidReceivedViewHolder> {
+public class   BidReceivedShowAdapter extends RecyclerView.Adapter<BidReceivedShowAdapter.BidReceivedViewHolder> {
     ArrayList<Bid>bidList;
     OnBidRecyclerViewClickLisner lisner;
     public BidReceivedShowAdapter (ArrayList<Bid>bidList){
