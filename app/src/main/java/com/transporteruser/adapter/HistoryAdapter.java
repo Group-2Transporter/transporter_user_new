@@ -32,6 +32,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistroyV
         holder.binding.tvTypeOfmaterial.setText(lead.getTypeOfMaterial());
         holder.binding.tvTransporterName.setText(lead.getTransporterName());
         holder.binding.tvDate.setText(lead.getDateOfCompletion());
+        holder.binding.tvWeight.setText(lead.getWeight());
         //holder.binding.tvrate.setText(lead.);
 
     }

@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,9 +26,13 @@ import androidx.core.content.PermissionChecker;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
+import com.transporteruser.adapter.HistoryAdapter;
 import com.transporteruser.api.UserService;
 import com.transporteruser.bean.User;
 import com.transporteruser.databinding.CreateProfileActivityBinding;
+import com.transporteruser.databinding.UpdateProfileActivityBinding;
+import com.transporteruser.fragement.BottomSheetFragment;
+import com.transporteruser.fragement.HistoryFragement;
 
 import java.io.File;
 
@@ -41,9 +47,10 @@ import retrofit2.http.Path;
 
 
 public class UpdateProfileActivity extends AppCompatActivity {
-    CreateProfileActivityBinding binding;
+    UpdateProfileActivityBinding binding;
     String currentUserId;
     Uri imageUri;
+    String [] separated;
     UserService.UserApi userApi;
     SharedPreferences sp = null;
 
@@ -53,15 +60,15 @@ public class UpdateProfileActivity extends AppCompatActivity {
         currentUserId = FirebaseAuth.getInstance().getUid();
         userApi = UserService.getTransporterApiIntance();
         sp = getSharedPreferences("user", MODE_PRIVATE);
-        binding = CreateProfileActivityBinding.inflate(LayoutInflater.from(this));
+        binding = UpdateProfileActivityBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
         getLocallyData();
-
+        getChangeListner();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PermissionChecker.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 11);
         }
 
-        binding.btnEditProfileImage.setOnClickListener(new View.OnClickListener() {
+        binding.civ.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent in = new Intent();
@@ -71,33 +78,32 @@ public class UpdateProfileActivity extends AppCompatActivity {
             }
         });
 
-
-        binding.btncreate.setOnClickListener(new View.OnClickListener() {
+        binding.btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = binding.etusername.getText().toString();
+                String name = binding.tvName.getText().toString();
                 if (TextUtils.isEmpty(name)) {
-                    binding.etusername.setError("Username required");
+                    binding.tvName.setError("Username required");
                 }
-                String streetAddress = binding.etStreetAddress.getText().toString();
+                String streetAddress = binding.tvStreetAddress.getText().toString();
                 if (TextUtils.isEmpty(streetAddress)) {
-                    binding.etStreetAddress.setError("street address is required ");
+                    binding.tvStreetAddress.setError("street address is required ");
                 }
 
-                String cityAddress = binding.etCityAddress.getText().toString();
+                String cityAddress = binding.tvCityAddress.getText().toString();
                 if (TextUtils.isEmpty(cityAddress)) {
-                    binding.etStreetAddress.setError("city address is required ");
+                    binding.tvCityAddress.setError("city address is required ");
                 }
 
-                String stateAddress = binding.etStateAddress.getText().toString();
+                String stateAddress = binding.tvStateAddress.getText().toString();
                 if (TextUtils.isEmpty(stateAddress)) {
-                    binding.etStreetAddress.setError("state address is required ");
+                    binding.tvStateAddress.setError("state address is required ");
                 }
 
                 String address = streetAddress + "," + cityAddress + "," + stateAddress;
-                String phoneNumber = binding.etphonenumber.getText().toString();
+                String phoneNumber = binding.tvContactNumber.getText().toString();
                 if (TextUtils.isEmpty(phoneNumber))
-                    binding.etphonenumber.setError("Phone number is required");
+                    binding.tvContactNumber.setError("Phone number is required");
                 String token = FirebaseInstanceId.getInstance().getToken();
                 User user = new User();
                 user.setUserId(currentUserId);
@@ -130,25 +136,42 @@ public class UpdateProfileActivity extends AppCompatActivity {
             }
         });
 
-        setSupportActionBar(binding.ToolBar);
+        binding.addLoad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final BottomSheetFragment bottom = new BottomSheetFragment(UpdateProfileActivity.this);
+                bottom.show(getSupportFragmentManager(), "");
+                bottom.setCancelable(false);
+            }
+        });
+
+        binding.historyCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(UpdateProfileActivity.this,HistoryActivity.class);
+                startActivity(i);
+            }
+        });
+
+        setSupportActionBar(binding.toolbar);
         getSupportActionBar().setTitle("Update Profile");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add("Delete");
-        return super.onCreateOptionsMenu(menu);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        menu.add("Delete");
+//        return super.onCreateOptionsMenu(menu);
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        String title = item.getTitle().toString();
-        if (title.equalsIgnoreCase("delete")) {
-            Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show();
-        }
-        return true;
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        String title = item.getTitle().toString();
+//        if (title.equalsIgnoreCase("delete")) {
+//            Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show();
+//        }
+//        return true;
+//    }
 
     @Override
     protected void onActivityResult(final int requestCode, int resultCode, @Nullable Intent data) {
@@ -195,15 +218,93 @@ public class UpdateProfileActivity extends AppCompatActivity {
     }
 
     private void getLocallyData() {
-        binding.btncreate.setText("Update");
-        binding.etusername.setText(sp.getString("name", ""));
-        binding.etphonenumber.setText(sp.getString("contactNo", ""));
-        String[] address = sp.getString("address", "").split(",");
-        binding.etStreetAddress.setText(address[0]);
-        binding.etCityAddress.setText(address[1]);
-        binding.etStateAddress.setText(address[2]);
+        binding.btnUpdate.setText("Update");
+        binding.tvName.setText(sp.getString("name", ""));
+        binding.tvUserName.setText(sp.getString("name",""));
+        binding.tvContactNumber.setText(sp.getString("contactNo", ""));
+        String address = sp.getString("address", "");
+        separated = address.split(",");
+        binding.tvStreetAddress.setText(separated[0]);
+        binding.tvCityAddress.setText(separated[1]);
+        binding.tvStateAddress.setText(separated[2]);
         Picasso.get().load(sp.getString("imageUrl", "")).into(binding.civ);
     }
+
+    private void getChangeListner() {
+        binding.tvUserName.setText(sp.getString("name",""));
+        binding.tvName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length()!=0)
+                    binding.tvUserName.setText(s);
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        binding.tvStreet.setText(separated[0]);
+        binding.tvStreetAddress.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length()!=0)
+                    binding.tvStreet.setText(s);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        binding.tvCity.setText(separated[1]);
+        binding.tvCityAddress.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length()!=0)
+                    binding.tvCity.setText(s);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        binding.tvState.setText(separated[2]);
+        binding.tvStateAddress.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length()!=0)
+                    binding.tvState.setText(s);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+    }
+
 
     private void saveDataLocally(User user) {
         SharedPreferences.Editor editor = sp.edit();

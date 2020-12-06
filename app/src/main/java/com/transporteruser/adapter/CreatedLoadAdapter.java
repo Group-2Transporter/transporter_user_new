@@ -41,6 +41,7 @@ public class CreatedLoadAdapter extends RecyclerView.Adapter<CreatedLoadAdapter.
         final Lead lead = list.get(position);
         holder.binding.tvAddress.setText(lead.getPickUpAddress() + " To " + lead.getDeliveryAddress());
         holder.binding.tvLastDate.setText(lead.getDateOfCompletion());
+        holder.binding.tvWeight.setText(lead.getWeight());
         holder.binding.tvTypeOfaterial.setText(lead.getTypeOfMaterial());
         if(lead.getBidCount() >= 1 && lead.getBidCount()<=9) {
             holder.binding.counter.setVisibility(View.VISIBLE);

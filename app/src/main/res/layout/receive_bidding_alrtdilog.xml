@@ -1,35 +1,38 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    android:layout_width="380dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
-    android:layout_gravity="center">
-    <ScrollView android:layout_height="match_parent" android:layout_width="match_parent"
-        xmlns:android="http://schemas.android.com/apk/res/android" >
+    android:layout_gravity="center"
+    android:padding="10dp">
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="450dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginBottom="5dp"
+            android:background="@drawable/boder_comfirm_load"
             android:elevation="10dp"
-            android:padding="5dp"
-            android:background="@drawable/boder_comfirm_load">
+            android:padding="5dp">
 
             <LinearLayout
                 android:id="@+id/llLocation"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@id/ivCancel"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="5dp"
-                    android:src="@drawable/location"
-                    android:layout_marginTop="25dp"
-                   />
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/location" />
 
                 <TextView
                     android:id="@+id/tvAddress"
@@ -37,24 +40,30 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:textStyle="bold"
+                    android:layout_marginLeft="-3dp"
+                    android:layout_marginTop="10dp"
+                    android:includeFontPadding="false"
+                    android:lines="2"
+                    android:padding="5dp"
                     android:text="Source to Destination Add : "
                     android:textSize="17sp"
-                    android:padding="5dp"
-                    android:layout_marginTop="15dp"
-                    />
+                    android:textStyle="bold" />
 
             </LinearLayout>
-            <ImageView
-                android:id="@+id/ivCancel"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/cross"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="-9dp"
-                android:layout_marginRight="-5dp"/>
 
+            <TextView
+                android:id="@+id/ivCancel"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="-5dp"
+                android:gravity="center"
+                android:text="X"
+                android:textColor="#eb150A"
+                android:textSize="25sp"
+
+                />
 
 
             <LinearLayout
@@ -62,67 +71,65 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/llLocation"
-                android:orientation="vertical"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
-                >
+                android:orientation="vertical"
+                android:padding="5dp">
 
                 <LinearLayout
                     android:id="@+id/llName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/llMaterialType"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="5dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/transporter" />
+
 
                     <TextView
                         style="@style/comfirm_load_textView"
                         android:layout_width="wrap_content"
                         android:text="Name : "
-                        android:textSize="16sp"/>
+                        android:layout_marginLeft="7dp"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/tvTransporterName"
                         style="@style/comfirm_load_textView"
                         android:layout_width="wrap_content"
                         android:text="khan shab"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp" />
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
-                <TextView
-                    style="@style/comfirm_load_textView"
-                    android:layout_width="wrap_content"
-                    android:text="Material : "
-                    android:textSize="16sp"/>
 
-                <TextView
-                    android:id="@+id/tvMaterial"
-                    style="@style/comfirm_load_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:text="gold"
-                    android:textSize="16sp"/>
-                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/material" />
+
                     <TextView
                         style="@style/comfirm_load_textView"
                         android:layout_width="wrap_content"
-                        android:text="Date : "
-                        android:textSize="16sp"/>
+                        android:text="Material : "
+                        android:layout_marginLeft="7dp"
+                        android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/tvdate"
+                        android:id="@+id/tvMaterial"
                         style="@style/comfirm_load_textView"
                         android:layout_width="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:text="10/23/2020"
-                        android:textSize="16sp"/>
+                        android:text="gold"
+                        android:textSize="16sp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/llMaterialType"
                     android:layout_width="wrap_content"
@@ -130,22 +137,79 @@
                     android:layout_below="@id/llLocation"
                     android:layout_marginTop="20dp">
 
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/money" />
+
                     <TextView
                         style="@style/comfirm_load_textView"
                         android:layout_width="wrap_content"
                         android:text="Rate : "
-                        android:textSize="16sp"/>
+                        android:layout_marginLeft="7dp"
+                        android:textSize="16sp"
+                        />
 
                     <TextView
                         android:id="@+id/tvRate"
                         style="@style/comfirm_load_textView"
                         android:layout_width="wrap_content"
                         android:text="10000"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp" />
+
+                    <ImageView
+
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="15dp"
+                        android:src="@drawable/weight" />
+
+
+                    <TextView
+                        style="@style/comfirm_load_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="Weight : " />
+
+                    <TextView
+                        android:id="@+id/tvWeight"
+                        style="@style/comfirm_load_textView"
+                        android:layout_width="wrap_content"
+                        android:text="8000" />
+                    <TextView
+
+                        style="@style/comfirm_load_textView"
+                        android:layout_width="wrap_content"
+                        android:text="Ton"
+                        android:layout_marginLeft="2dp"/>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="287dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/lastdate" />
+                    <TextView
+                        style="@style/comfirm_load_textView"
+                        android:layout_width="wrap_content"
+                        android:text="Date : "
+                        android:layout_marginLeft="7dp"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tvdate"
+                        style="@style/comfirm_load_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:text="10/23/2020"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/llName"
                     android:layout_marginTop="20dp"
@@ -155,6 +219,7 @@
                     <TextView
                         style="@style/comfirm_load_textView"
                         android:layout_width="wrap_content"
+                        android:layout_marginLeft="-2dp"
                         android:text=" Remark"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -163,30 +228,31 @@
                         android:id="@+id/tvRemark"
                         style="@style/comfirm_load_textView"
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:layout_marginRight="8dp"
-                        android:background="@drawable/boder_comfirm_load"
-                        android:elevation="10dp"
-                        android:hint="bahut badiya hai aapki "
-                        android:padding="8dp"
+                        android:layout_marginLeft="-4dp"
+                        android:layout_marginRight="5dp"
+                        android:background="#edeaea"
+                        android:hint="bahut badiya hai aapki"
+                        android:lines="5"
+                        android:padding="10dp"
                         android:textSize="16sp" />
 
                     <Button
-                        android:layout_width="160dp"
-                        android:layout_height="40dp"
                         android:id="@+id/btnAccept"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/button_blue"
-                        android:text="Accept"
-                        android:textSize="16dp"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
                         android:layout_marginTop="10dp"
-                        android:layout_marginLeft="7dp"
-                        android:layout_marginBottom="5dp"/>
+                        android:layout_marginRight="3dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/button_blue"
+                        android:elevation="10dp"
+                        android:text="Accept"
+                        android:textColor="@color/white"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
 
         </RelativeLayout>
-</ScrollView>
+    </ScrollView>
 </LinearLayout>

@@ -1,20 +1,18 @@
-package com.transporteruser.fragement;
+package com.transporteruser;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.transporteruser.adapter.HistoryAdapter;
 import com.transporteruser.api.UserService;
 import com.transporteruser.bean.Lead;
-import com.transporteruser.databinding.HistoryFragementBinding;
+import com.transporteruser.databinding.HistoryActivityBinding;
 
 import java.util.ArrayList;
 
@@ -22,39 +20,39 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HistoryFragement extends Fragment {
+public class HistoryActivity extends AppCompatActivity {
     HistoryAdapter adapter;
     String currentUser;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        currentUser = FirebaseAuth.getInstance().getUid();
-        final HistoryFragementBinding binding = HistoryFragementBinding.inflate(getLayoutInflater());
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        final HistoryActivityBinding binding = HistoryActivityBinding.inflate(LayoutInflater.from(this));
+        setContentView(binding.getRoot());
         UserService.UserApi userApi = UserService.getTransporterApiIntance();
+        currentUser= FirebaseAuth.getInstance().getUid();
         Call<ArrayList<Lead>> call = userApi.getAllCompletedLead(currentUser);
         call.enqueue(new Callback<ArrayList<Lead>>() {
             @Override
             public void onResponse(Call<ArrayList<Lead>> call, Response<ArrayList<Lead>> response) {
                 if (response.code()==200){
-                    binding.noReord.setVisibility(View.GONE);
-                    binding.rv.setVisibility(View.VISIBLE);
                     ArrayList<Lead> leadList = response.body();
                     adapter = new HistoryAdapter(leadList);
                     binding.rv.setAdapter(adapter);
-                    binding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
-                }else if(response.code()==404){
-                    binding.noReord.setVisibility(View.VISIBLE);
-                    binding.rv.setVisibility(View.GONE);
+                    binding.rv.setLayoutManager(new LinearLayoutManager(HistoryActivity.this));
+
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<Lead>> call, Throwable t) {
-
+                Toast.makeText(HistoryActivity.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
-        return binding.getRoot();
+
+        setSupportActionBar(binding.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 }

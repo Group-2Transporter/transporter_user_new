@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
                         .createSignInIntentBuilder()
                         .setAvailableProviders(providers)
                         .setTheme(R.style.GreenTheme)
-                        .setLogo(R.drawable.eagle)
+                        .setLogo(R.drawable.eagles)
                         .build(),
                 RC_SIGN_IN);
     }
